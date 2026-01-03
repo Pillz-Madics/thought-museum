@@ -10,6 +10,11 @@ class ThoughtApp:
         
 
     def run(self):
+        """
+        Docstring for run
+        
+        :param self: Run the main application loop
+        """
         os.system('cls' if os.name == 'nt' else 'clear')
         print(interact.generate_home_menu())
         action = input("Select an option: ")
@@ -44,6 +49,20 @@ class ThoughtApp:
         thought = self.manager.view_thought(thought_id)
         if thought:
             print(interact.generate_thought_view(thought))
+            options = input("Select an option: ")
+            if options == '1':
+                new_title = input("Enter new title (leave blank to keep current): ")
+                new_content = input("Enter new content (leave blank to keep current): ")
+                self.edit_thought(thought_id, new_title or None, new_content or None)
+                print("Thought updated.")
+            elif options == '2':
+                self.delete_thought(thought_id)
+                print("Thought deleted.")
+            elif options == '3':
+                self.run()
+            else:
+                print("Invalid option selected.")
+            
         print("Thought not found.")
         
 

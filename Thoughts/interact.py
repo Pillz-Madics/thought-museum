@@ -16,7 +16,7 @@ def generate_thought_view(thought):
     
     :param thought: Description
     '''
-    return f"tought View:\nTitle: {thought['title']}\nThought: {thought['content']}" \
+    return f"Thought View:\nTitle: {thought['title']}\nThought: {thought['content']}\n" \
             "1. Edit Thought\n" \
             "2. Delete Thought\n" \
             "3. Back to Home\n"
