@@ -16,10 +16,10 @@ def generate_thought_view(thought):
     
     :param thought: Description
     '''
-    return f"Thought View:\nTitle: {thought['title']}\nThought: {thought['content']}\n" \
-            "1. Edit Thought\n" \
-            "2. Delete Thought\n" \
-            "3. Back to Home\n"
+    return f"Thought View:\nTitle: {thought['title']}\nThought: {thought['content']}\n\n" \
+            f"Created At: {thought['created_at']}\n" \
+            "1. Edit Thought | 2. Delete Thought | 3. Back to Home\n"
+         
 
 
  # Generate a view confirming thought creation
@@ -39,6 +39,6 @@ def generate_thoughts_list_view(thoughts):
     thought_items = "Thoughts List:\n"
 
     for thought in thoughts:
-        thought_items += thought + "\n"
+        thought_items += f"{thought['id']} - {thought['title']}\n"
 
     return thought_items
