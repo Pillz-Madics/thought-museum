@@ -1,0 +1,10 @@
+setup.py
+myapp/__init__.py
+myapp/cli2.py
+myapp/interact.py
+myapp/my_app.py
+thought.egg-info/PKG-INFO
+thought.egg-info/SOURCES.txt
+thought.egg-info/dependency_links.txt
+thought.egg-info/entry_points.txt
+thought.egg-info/top_level.txt

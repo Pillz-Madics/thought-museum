@@ -1,0 +1,2 @@
+[console_scripts]
+thought = myapp.cli2:main
