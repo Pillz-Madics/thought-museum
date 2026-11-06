@@ -1,6 +1,6 @@
 from .note import Note
 import datetime
-import readline
+
 
 
 # create a class for managing thoughts and their logic
@@ -13,7 +13,7 @@ class ThoughtManager:
         """
         Docstring for create_thought
 
-        :param self: fuction instance
+        :param self: function instance
         :param title: Name of the thought
         :param content: Content of the thought
         """
@@ -34,41 +34,23 @@ class ThoughtManager:
             return thought.to_dict()
         return None
 
-    def pre_hook(self, text):
-        """
-        Docstring for pre_hook
+    
 
-        :param self: function instance
-        :param text: Text to prefill
-        """
-
-        def prefill():
-            readline.insert_text(text)
-            readline.redisplay()
-
-        readline.set_pre_input_hook(prefill)
-
-    def edit_thought(self, thought_id):
-        """ "
+    def edit_thought(self, thought):
+        """ 
         Docstring for edit_thought
         :param self: function instance
         :param thought_id: ID of the thought to edit
         """
+        old_thought = self.thoughts.get(thought.id)
+        self.thoughts[thought.id] = thought
 
-        thought = self.thoughts.get(thought_id)
-        if thought:
-            self.pre_hook(thought.title)
-            title = input("Enter new title: ")
-
-            thought.title = title
-            self.pre_hook(thought.content)
-            content = input("Enter new content: ")
-            thought.content = content
-
-            readline.set_pre_input_hook(None)
+        if old_thought == self.thoughts.get(thought.id):
+            return False
         else:
-            return "Thought not found."
-        return None
+            return True
+        
+        
 
     def delete_thought(self, thought_id):
         """

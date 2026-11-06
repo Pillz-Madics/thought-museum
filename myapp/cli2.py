@@ -1,5 +1,5 @@
 import argparse
-from myapp.Thoughts.logic.logic import ThoughtManager
+from Thoughts.logic.logic import ThoughtManager
 import os
 
 class Thought_cli:
