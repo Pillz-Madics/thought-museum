@@ -1,6 +1,7 @@
 import interact
 from Thoughts.logic.logic import ThoughtManager
 import time
+import readline
 import sys
 import os
 
@@ -33,17 +34,20 @@ class ThoughtApp:
         if action == "1":
             os.system("cls" if os.name == "nt" else "clear")
             self.create_thought()
-            self.run()
+
         elif action == "2":
             os.system("cls" if os.name == "nt" else "clear")
             thoughts = self.list_thoughts()
             print(interact.generate_thoughts_list_view(thoughts))
             thought_id = input("Enter thought ID to view or B for back: ")
+
             if thought_id == "B" or thought_id == "b":
-                self.run()
+                return
             else:
                 self.view_thought(int(thought_id))
+
         elif action == "3":
+            
             os.system("cls" if os.name == "nt" else "clear")
             if thoughts := self.list_thoughts():
                 self.manager.save_thoughts("thought_museum.txt")
@@ -53,7 +57,7 @@ class ThoughtApp:
             sys.exit(0)
         else:
             print("Invalid option selected.")
-            self.run()
+            
 
 
     def create_thought(self):
@@ -71,24 +75,48 @@ class ThoughtApp:
             options = input("Select an option: ")
             if options == "1":
                 self.edit_thought(thought_id)
-                print("Thought updated.")
-                self.run()
             elif options == "2":
                 self.delete_thought(thought_id)
-                print("Thought deleted.")
-                self.run()
             elif options == "3":
-                self.run()
+                return
             else:
                 print("Invalid option selected.")
-                self.run()
-        print("Thought not found.")
-        time.sleep(1)
-        self.run()
+        else:
+            print("Thought not found.")
+            time.sleep(1)
+        
 
+    def pre_hook(self, text):
+        """
+        Docstring for pre_hook
+
+        :param self: function instance
+        :param text: Text to prefill
+        """
+
+        def prefill():
+            readline.insert_text(text)
+            readline.redisplay()
+
+        readline.set_pre_input_hook(prefill)
 
     def edit_thought(self, thought_id):
-        self.manager.edit_thought(thought_id)
+        thought = self.manager.thoughts.get(thought_id)
+        if thought: 
+            self.pre_hook(thought.title)
+            title = input("Enter new title: ")
+            thought.title = title
+
+            self.pre_hook(thought.content)
+            content = input("Enter new content: ")
+            thought.content = content
+            readline.set_pre_input_hook(None)
+            self.manager.edit_thought(thought)
+
+            return "Thought saved."
+        else: 
+            return "Thought not found."
+        
 
 
     def delete_thought(self, thought_id):
@@ -102,4 +130,5 @@ class ThoughtApp:
 if __name__ == "__main__":
     app = ThoughtApp()
     app.load_thoughts()
-    app.run()
+    while True:
+        app.run()
