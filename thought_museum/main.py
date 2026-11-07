@@ -1,5 +1,5 @@
-import interact
-from Thoughts.logic.logic import ThoughtManager
+import main_menu as interact
+from Domain.thought_manager import ThoughtManager
 import time
 import readline
 import sys

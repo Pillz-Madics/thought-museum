@@ -71,35 +71,3 @@ class ThoughtManager:
         """
         return [thought.to_dict() for thought in self.thoughts.values()]
 
-    def save_thoughts(self, filename):
-        """
-        Docstring for save_thoughts
-
-        :param self: function instance
-        :param filename: Name of the file to save thoughts
-        """
-        with open(filename, "w") as f:
-            for thought in self.thoughts.values():
-                f.write(
-                    f"{thought.id}|{thought.title}|{thought.content}|{thought.created_at}\n"
-                )
-
-    def load_thoughts(self, filename):
-        """
-        Docstring for load_thoughts
-
-        :param self: function instance
-        :param filename: Name of the file to load thoughts from
-        """
-        try:
-            with open(filename, "r") as f:
-                for line in f:
-                    id_str, title, content, created_at_str = line.strip().split("|")
-                    thought_id = int(id_str)
-                    created_at = datetime.datetime.fromisoformat(created_at_str)
-                    thought = Note(thought_id, title, content, created_at)
-                    self.thoughts[thought_id] = thought
-                    if thought_id >= self.next_id:
-                        self.next_id = thought_id + 1
-        except FileNotFoundError:
-            pass
